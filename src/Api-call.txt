@@ -1,0 +1,28 @@
+import './App.css';
+import { useEffect, useState } from 'react';
+
+function App(props) {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    fetch("https://api.github.com/users")
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((result) => {
+        setUsers(result);
+      }).catch((error) => {
+        console.log(error)
+      })
+  }, [])
+  const list = () => users.map((user, index) => (<li key={"u_" + index}>{user.login}</li>))
+  return (
+    <div className="App">
+      <ul>
+        {list}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
